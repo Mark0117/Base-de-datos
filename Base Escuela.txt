@@ -1,0 +1,64 @@
+Create database ESCUELA;
+
+use ESCUELA;
+
+create table tipoAlumnos(idTipoAlumno int primary key auto_increment,
+tipoAlumno varchar(25))engine=innodb;
+
+create table ALUMNOS(idAlumno int primary key auto_increment, nombreAlumno varchar(25),
+apAlumno varchar(25),amAlumno varchar(25), matricula varchar(20),
+idTipoAlumno int, foreign key(idTipoAlumno) references 
+tipoAlumnos(idTipoAlumno))engine=innodb;
+
+create table GRUPOS (idGrupo int primary key auto_increment,
+nombreGrupo varchar(25))engine=inndb;
+
+create table PERIODOS(idPeriodo int primary key auto_increment,
+nombrePeriodo varchar(25))engine=innodb;
+
+create table MATERIAS(idMateria int primary key auto_increment,
+nombreMateria varchar(25))engine=innodb;
+
+create table ESCUELAS(idEscuela int primary key auto_increment,
+nombreEscuela varchar(25))engine=innodb;
+
+create table PARCIALES(idParcial int primary key auto_increment,
+nombreParcial varchar(25))engine=innodb;
+
+create table TIPOASISTENCIA(idTipoAsistencia int primary key auto_increment,
+tipoAsistencia varchar(25))engine=innodb;
+
+create table CALIFICACIONES(idCalificacion int primary key auto_increment,
+nombreCalificacion varchar(25))engine=inndb;
+
+create table SALONES(idSalon int primary key auto_increment,
+nombreSalon varchar(25))engine=innodb;
+
+create table ASISTENCIAS(idAsistencia int primary key auto_increment,
+idAlumno int,idTipoAsistencia int,foreign key(idTipoAsistencia) references
+TIPOASISTENCIAS(idTipoAsistencia),idAgrupacion int, fecha date);
+
+create table HORARIOS(idHorario int primary key auto_increment,
+dia date, horaInico time, horaFinal time, idAgrupacion int, idSalon int,
+foreign key(idSalon) references SALONES(idSalon))engine=innodb;
+
+create table AGRUPACIONES(idAgrupacion int primary key auto_increment,
+idGrupo int,foreign key(idGrupo) references GRUPO(idGrupo),
+idAlumno int,foreign key(idAlumno) references ALUMNOS(idAlumno),
+idPeriodo int,foreign key(idPeriodo) references PERIODOS(idPeriodos),
+idMateria int,foreign key(idMateria) references MATERIAS(idMaterias),
+idEscuela int,foreign key(idEscuela) references ESCUELAS(idEscuela),
+idParcial int,foreign key(idParcial) references PARCIALES(idParcial));
+
+create table TRABAJOS(idTrabajo int primary key auto_increment,
+nombreTrabajo varchar(25), idAgrupacion int(11),foreign key(idAgrupacion)
+references AGRUPACIONES(idAgrupacion),idCalificacion int, 
+foreign key(idCalificacion) references calificaciones(idCalificacion));
+
+create table CALIFICACIONESALUMNOS(idCalificacionAlumno int primary key
+auto_increment, idAgrupacion int,foreign key(idAgrupacion) references
+AGRUPACIONES(idAgrupacion),calificacionTrabajos double, 
+calificacionAsistencia double, calificacionCompetencias double,
+calificacionTrabjaoEnClase double, calificacionDelParcial double);
+
+
